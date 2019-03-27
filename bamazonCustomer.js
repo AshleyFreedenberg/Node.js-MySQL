@@ -51,17 +51,35 @@ function prompt() {
                 if (err) throw err;
                 var idNum = inquirerResponse.productId - 1;
                 //console.log(results[idNum].id);
-                
-                if (inquirerResponse.units > results[idNum].stock_quantity){
-                    console.log("~~~~~~~~~~~~~~~~~~~~~~Insufficient quantity!~~~~~~~~~~~~~~~~~~~~~~~")
+                var currentQuantity = results[idNum].stock_quantity;
+                var newQuantity = currentQuantity - inquirerResponse.units;
+
+                console.log(currentQuantity);
+                console.log(newQuantity);
+
+                if (inquirerResponse.units > results[idNum].stock_quantity) {
+                    console.log("~~~~~~~~~~~~~Insufficient quantity, Please try again!~~~~~~~~~~~~~~")
                     afterConnection();
                 }
                 else {
-
-                    
+                    connection.query(
+                        "UPDATE products SET ? WHERE ?",
+                        [
+                            {
+                                stock_quantity: newQuantity
+                            },
+                            {
+                                id: idNum
+                            }
+                        ],
+                        function(error) {
+                            if (error) throw err;
+                            console.log("Successful!");
+                          }
+                    );
+                    afterConnection();    
                 }
-                //console.log(inquirerResponse.productId);
                 
-            });
+            })
         });
 }
