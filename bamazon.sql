@@ -35,3 +35,7 @@ INSERT INTO products(product_name, department_name, price, stock_quantity)
 VALUES ("Woodburning Firepit", "Garden", 79.99, 30);
 INSERT INTO products(product_name, department_name, price, stock_quantity)
 VALUES ("Kindle E-reader", "Electronics", 99.99, 100);
+
+UPDATE products
+SET stock_quantity = 120
+WHERE id = 3;

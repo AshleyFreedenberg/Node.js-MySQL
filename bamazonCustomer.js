@@ -54,8 +54,9 @@ function prompt() {
                 var currentQuantity = results[idNum].stock_quantity;
                 var newQuantity = currentQuantity - inquirerResponse.units;
 
-                console.log(currentQuantity);
-                console.log(newQuantity);
+                // console.log(currentQuantity);
+                // console.log(newQuantity);
+                // console.log(inquirerResponse.productId);
 
                 if (inquirerResponse.units > results[idNum].stock_quantity) {
                     console.log("~~~~~~~~~~~~~Insufficient quantity, Please try again!~~~~~~~~~~~~~~")
@@ -69,7 +70,7 @@ function prompt() {
                                 stock_quantity: newQuantity
                             },
                             {
-                                id: idNum
+                                id: inquirerResponse.productId
                             }
                         ],
                         function(error) {
