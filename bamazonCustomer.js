@@ -5,21 +5,16 @@ const cTable = require('console.table');
 const connection = mysql.createConnection({
     host: "localhost",
 
-    // Your port; if not 3306
     port: 3306,
 
-    // Your username
     user: "root",
 
-    // Your password
     password: "password",
     database: "bamazonDB"
 });
 
-// connect to the mysql server and sql database
 connection.connect(err => {
     if (err) throw err;
-    // run the start function after the connection is made to prompt the user
     afterConnection();
 });
 
@@ -27,7 +22,6 @@ function afterConnection() {
     connection.query("SELECT * FROM products", (err, res) => {
         if (err) throw err;
         console.table(res);
-        //connection.end();
         prompt();
     });
 }
@@ -50,13 +44,9 @@ function prompt() {
             connection.query("SELECT * FROM products", (err, results) => {
                 if (err) throw err;
                 var idNum = inquirerResponse.productId - 1;
-                //console.log(results[idNum].id);
+
                 var currentQuantity = results[idNum].stock_quantity;
                 var newQuantity = currentQuantity - inquirerResponse.units;
-
-                // console.log(currentQuantity);
-                // console.log(newQuantity);
-                // console.log(inquirerResponse.productId);
 
                 if (inquirerResponse.units > results[idNum].stock_quantity) {
                     console.log("~~~~~~~~~~~~~Insufficient quantity, Please try again!~~~~~~~~~~~~~~")
@@ -73,14 +63,13 @@ function prompt() {
                                 id: inquirerResponse.productId
                             }
                         ],
-                        function(error) {
+                        function (error) {
                             if (error) throw err;
                             console.log("Successful!");
-                          }
+                        }
                     );
-                    afterConnection();    
+                    afterConnection();
                 }
-                
             })
         });
 }
